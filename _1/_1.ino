@@ -266,15 +266,10 @@ void S_504()
 {
   if (FSM1.doTask())
   {
-<<<<<<< HEAD
-    LEDDisplay.setValue(504); 
-    MotorR.setSpeed(TURN_SPEED);
-    MotorL.setSpeed(0);  
-=======
     LEDDisplay.setValue(504);
     MotorR.setSpeed(TURN_SPEED);
     MotorL.setSpeed(0);
->>>>>>> d1d9a2dda20c97af1515a4666005676a8ecbd30e
+
   }
   if (!(S2.getHiLow() == BLK && S4.getHiLow() == WHT)) FSM1.transit(S_501);
 }
@@ -395,5 +390,3 @@ void S_803()
   }
   if (S2.getHiLow() == BLK && S3.getHiLow() == WHT && S4.getHiLow() == BLK) FSM1.transit(S_999);
 }
-
-
