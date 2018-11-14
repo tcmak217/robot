@@ -264,7 +264,7 @@ void S_504()
   if(FSM1.doTask())
   {
     LEDDisplay.setValue(504); 
-    MotorR.setSpeed(TURN_SPEED); 
+    MotorR.setSpeed(TURN_SPEED);
     MotorL.setSpeed(0);  
   }
   if (!(S2.getHiLow()== BLK && S4.getHiLow()== WHT)) FSM1.transit(S_501);   
