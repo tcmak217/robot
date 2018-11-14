@@ -13,9 +13,9 @@
   Input: IR sensor right (A2)
 */
 /*
- 1. set the left and right offset (left motor is slower)
- 2. S_802&S_803
- */
+  1. set the left and right offset (left motor is slower)
+  2. S_802&S_803
+*/
 #include "ENGG1100.h"
 #include <Servo.h>
 #define BLK 0
@@ -30,7 +30,7 @@
 #define NORMAL_SPEED 250
 #define CATCHED_SPEED 230
 #define TURN_SPEED 180
-#define LEFT_OFFSET 0
+#define LEFT_OFFSET -50
 #define RIGHT_OFFSET 0
 
 FSMClass FSM1;          //The given FSM is named 'FSM1'.
@@ -68,7 +68,7 @@ void S_999()
     Servo2.setValue(LEFT_POS);
     LEDDisplay.setValue(999);
   }
-  if (FSM1.getTime() > 3000) FSM1.transit(S_101);
+  if (FSM1.getTime() > 500) FSM1.transit(S_101);
 }
 //------------------------------------
 void S_101()
@@ -221,7 +221,7 @@ void S_403()
     MotorL.setSpeed(0);
     Servo2.setValue(REAR_POS);
   }
-  if (FSM1.getTime() > 2500) FSM1.transit(S_501);
+  if (FSM1.getTime() > 1000) FSM1.transit(S_501);
 }
 //------------------------------------
 /*Same as S_301 (with cup)*/
@@ -266,10 +266,20 @@ void S_504()
 {
   if (FSM1.doTask())
   {
+<<<<<<< HEAD
     LEDDisplay.setValue(504);
     MotorR.setSpeed(TURN_SPEED);
     MotorL.setSpeed(0);
 
+=======
+    LEDDisplay.setValue(504);
+    MotorR.setSpeed(TURN_SPEED);
+    MotorL.setSpeed(0);
+
+    LEDDisplay.setValue(504);
+    MotorR.setSpeed(TURN_SPEED);
+    MotorL.setSpeed(0);
+>>>>>>> f97607938bd61d131d86e2aa0b71dedbb45df31a
   }
   if (!(S2.getHiLow() == BLK && S4.getHiLow() == WHT)) FSM1.transit(S_501);
 }
@@ -370,23 +380,33 @@ void S_801()
 /* turn around and move to S_803*/
 void S_802()
 {
-  if (FSM1.doTask())
-
-    MotorL.setSpeed(TURN_SPEED);
-
-  if (S2.getHiLow() == BLK && S3.getHiLow() == BLK && S4.getHiLow() == BLK) FSM1.transit(S_803);
+  if (FSM1.doTask()) {
+    LEDDisplay.setValue(802);
+    MotorL.setSpeed(-150);
+    MotorR.setSpeed(125);
+  }
+  if (S2.getHiLow() == WHT && S3.getHiLow() == BLK && S4.getHiLow() == WHT) FSM1.transit(S_803);
 }
 
 //------------------------------------
-/*move a bit forward when detect 3 black*/
+/*stop*/
 void S_803()
 {
-  if (FSM1.doTask())
-  {
+  if (FSM1.doTask()) {
     LEDDisplay.setValue(803);
+<<<<<<< HEAD
     delay(1000);
     MotorL.setSpeed((NORMAL_SPEED - LEFT_OFFSET + 100) / 2);
     MotorR.setSpeed((NORMAL_SPEED - RIGHT_OFFSET) / 2);
   }
   if (S2.getHiLow() == BLK && S3.getHiLow() == WHT && S4.getHiLow() == BLK) FSM1.transit(S_999);
 }
+=======
+    MotorR.setSpeed(0);
+    MotorL.setSpeed(0);
+    delay(500 );
+
+  }
+  if (S2.getHiLow() == WHT && S3.getHiLow() == BLK && S4.getHiLow() == WHT) FSM1.transit(S_999);
+}
+>>>>>>> f97607938bd61d131d86e2aa0b71dedbb45df31a
