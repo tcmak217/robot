@@ -266,12 +266,6 @@ void S_504()
 {
   if (FSM1.doTask())
   {
-<<<<<<< HEAD
-    LEDDisplay.setValue(504);
-    MotorR.setSpeed(TURN_SPEED);
-    MotorL.setSpeed(0);
-
-=======
     LEDDisplay.setValue(504);
     MotorR.setSpeed(TURN_SPEED);
     MotorL.setSpeed(0);
@@ -279,7 +273,6 @@ void S_504()
     LEDDisplay.setValue(504);
     MotorR.setSpeed(TURN_SPEED);
     MotorL.setSpeed(0);
->>>>>>> f97607938bd61d131d86e2aa0b71dedbb45df31a
   }
   if (!(S2.getHiLow() == BLK && S4.getHiLow() == WHT)) FSM1.transit(S_501);
 }
@@ -394,14 +387,6 @@ void S_803()
 {
   if (FSM1.doTask()) {
     LEDDisplay.setValue(803);
-<<<<<<< HEAD
-    delay(1000);
-    MotorL.setSpeed((NORMAL_SPEED - LEFT_OFFSET + 100) / 2);
-    MotorR.setSpeed((NORMAL_SPEED - RIGHT_OFFSET) / 2);
-  }
-  if (S2.getHiLow() == BLK && S3.getHiLow() == WHT && S4.getHiLow() == BLK) FSM1.transit(S_999);
-}
-=======
     MotorR.setSpeed(0);
     MotorL.setSpeed(0);
     delay(500 );
@@ -409,4 +394,3 @@ void S_803()
   }
   if (S2.getHiLow() == WHT && S3.getHiLow() == BLK && S4.getHiLow() == WHT) FSM1.transit(S_999);
 }
->>>>>>> f97607938bd61d131d86e2aa0b71dedbb45df31a
