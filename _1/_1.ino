@@ -271,7 +271,7 @@ void S_601()
     MotorR.setSpeed(NORMAL_SPEED-RIGHT_OFFSET); 
     MotorL.setSpeed(NORMAL_SPEED-LEFT_OFFSET);      
   }
-  if (FSM1.getTime() >100) FSM1.transit(S_602); 
+  if (FSM1.getTime() >200) FSM1.transit(S_602); 
 }
 //------------------------------------
 void S_602()   
@@ -279,8 +279,8 @@ void S_602()
   if(FSM1.doTask())
   {
     LEDDisplay.setValue(602); 
-    MotorR.setSpeed(0);
-    MotorL.setSpeed(TURN_SPEED);      
+    MotorR.setSpeed(TURN_SPEED-RIGHT_OFFSET);
+    MotorL.setSpeed(0);      
   }
   if (S3.getHiLow()== BLK && S4.getHiLow()== WHT) FSM1.transit(S_701); 
 }
