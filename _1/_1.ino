@@ -181,7 +181,8 @@ void S_304()
   if (S1.getHiLow()== BLK)  FSM1.transit(S_401);
   if (!(S2.getHiLow()== BLK && S4.getHiLow()== WHT)) FSM1.transit(S_301);   
 }
-//------------------------------------
+//------------------------------------ 
+/*Stop and if the car move pass the cup, move backward*/
 void S_401()   
 {
   if(FSM1.doTask())
@@ -192,7 +193,8 @@ void S_401()
   }
   if (S1.getHiLow()== BLK)  FSM1.transit(S_402);
 }
-//------------------------------------
+//------------------------------------ 
+/*catch the cup*/
 void S_402()   
 {
   if(FSM1.doTask())
@@ -204,7 +206,8 @@ void S_402()
   }
   if (FSM1.getTime() >1000) FSM1.transit(S_403);
 }
-//------------------------------------
+//------------------------------------ 
+/*the clamp move the the backward position (servo 2 turn)*/
 void S_403()   
 {
   if(FSM1.doTask())
@@ -216,19 +219,21 @@ void S_403()
   }
   if (FSM1.getTime() >2500) FSM1.transit(S_501);
 }
-//------------------------------------
+//------------------------------------ 
+/*Same as S_301 (with cup)*/
 void S_501()  
 {
   if(FSM1.doTask())
   {
     LEDDisplay.setValue(501); 
   }
-  if (S2.getHiLow()== WHT && S4.getHiLow()== WHT) FSM1.transit(S_502);
+  if (S2.getHiLow()== WHT && S4.getHicLow()== WHT) FSM1.transit(S_502);
   if (S2.getHiLow()== WHT && S4.getHiLow()== BLK) FSM1.transit(S_503);
   if (S2.getHiLow()== BLK && S4.getHiLow()== WHT) FSM1.transit(S_504);   
   if (S2.getHiLow()== BLK && S3.getHiLow()== BLK && S4.getHiLow()== BLK) FSM1.transit(S_601);
 }
-//------------------------------------
+//------------------------------------ 
+/*Same as S_302 (with cup)*/
 
 void S_502()   
 {
@@ -240,7 +245,8 @@ void S_502()
   }
   if (!(S2.getHiLow()== WHT && S4.getHiLow()== WHT)) FSM1.transit(S_501); 
 }
-//------------------------------------
+//------------------------------------ 
+/*Same as S_303 (with cup)*/
 void S_503()   
 {
   if(FSM1.doTask())
@@ -251,7 +257,8 @@ void S_503()
   }
   if (!(S2.getHiLow()== WHT && S4.getHiLow()== BLK)) FSM1.transit(S_501); 
 }
-//------------------------------------
+//------------------------------------ 
+/*Same as S_304 (with cup)*/
 void S_504()   
 {
   if(FSM1.doTask())
@@ -262,7 +269,8 @@ void S_504()
   }
   if (!(S2.getHiLow()== BLK && S4.getHiLow()== WHT)) FSM1.transit(S_501);   
 }
-//------------------------------------
+//------------------------------------ 
+/*when s2 and s4 detect black, move a bit forward*/
 void S_601()   
 {
   if(FSM1.doTask())
@@ -273,7 +281,8 @@ void S_601()
   }
   if (FSM1.getTime() >200) FSM1.transit(S_602); 
 }
-//------------------------------------
+//------------------------------------ 
+/*turn left after entering S_601*/
 void S_602()   
 {
   if(FSM1.doTask())
@@ -284,8 +293,8 @@ void S_602()
   }
   if (S3.getHiLow()== BLK && S4.getHiLow()== WHT) FSM1.transit(S_701); 
 }
-
-//------------------------------------
+/*S_701 to S_704 is S_301 to S_304*/
+//------------------------------------ 
 void S_701()   
 {
   if(FSM1.doTask())
@@ -299,7 +308,7 @@ void S_701()
   if (S2.getHiLow()== WHT && S4.getHiLow()== BLK) FSM1.transit(S_703);
   if (S2.getHiLow()== BLK && S4.getHiLow()== WHT) FSM1.transit(S_704);   
 }
-//------------------------------------
+//------------------------------------ 
 void S_702()   
 {
   if(FSM1.doTask())
@@ -336,7 +345,8 @@ void S_704()
   if (S2.getHiLow()== WHT && S3.getHiLow()== WHT && S4.getHiLow()== WHT ) FSM1.transit(S_801);
 }
 //------------------------------------
-void S_801()    
+/* drop cup when detect 3 white*/
+void S_801()
 {
   if(FSM1.doTask())
   {
