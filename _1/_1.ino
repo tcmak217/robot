@@ -12,10 +12,7 @@
   Input: IR sensor middle (A3)
   Input: IR sensor right (A2)
 */
-/*
-  1. set the left and right offset (left motor is slower)
-  2. S_802&S_803
-*/
+/*pick up all cup in the outer circle*/
 #include "ENGG1100.h"
 #include <Servo.h>
 #define BLK 0
@@ -266,10 +263,6 @@ void S_504()
 {
   if (FSM1.doTask())
   {
-    LEDDisplay.setValue(504);
-    MotorR.setSpeed(TURN_SPEED);
-    MotorL.setSpeed(0);
-
     LEDDisplay.setValue(504);
     MotorR.setSpeed(TURN_SPEED);
     MotorL.setSpeed(0);
