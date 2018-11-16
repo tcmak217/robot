@@ -22,13 +22,13 @@
 #define RIGHT_POS 172
 #define REAR_POS 70
 #define LEFT_POS 0
-#define CLAMP_OPEN 170
+#define CLAMP_OPEN 180
 #define CLAMP_RELEASE 110
 #define CLAMP_CLOSE 90
 #define NORMAL_SPEED 250
 #define CATCHED_SPEED 230
 #define TURN_SPEED 180
-#define LEFT_OFFSET -50
+#define LEFT_OFFSET -80
 #define RIGHT_OFFSET 0
 
 FSMClass FSM1;          //The given FSM is named 'FSM1'.
@@ -188,14 +188,27 @@ void S_401()
   if (FSM1.doTask())
   {
     LEDDisplay.setValue(401);
-    MotorR.setSpeed(-30);
-    MotorL.setSpeed(-30);
+    MotorR.setSpeed(0);
+    MotorL.setSpeed(0);
   }
-  if (S1.getHiLow() == BLK)  FSM1.transit(S_402);
+  if (S1.getHiLow() == WHT)  FSM1.transit(S_402);
+  if (S1.getHiLow() == BLK)  FSM1.transit(S_403);
+}
+//------------------------------------
+/*Stop and if the car move pass the cup, move backward*/
+void S_402()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(401);
+    MotorR.setSpeed(NORMAL_SPEED - RIGHT_OFFSET - 100);
+    MotorL.setSpeed(NORMAL_SPEED - LEFT_OFFSET - 100);
+  }
+  if (S1.getHiLow() == BLK)  FSM1.transit(S_401);
 }
 //------------------------------------
 /*catch the cup*/
-void S_402()
+void S_403()
 {
   if (FSM1.doTask())
   {
@@ -204,11 +217,11 @@ void S_402()
     MotorL.setSpeed(0);
     Servo1.setValue(CLAMP_CLOSE);
   }
-  if (FSM1.getTime() > 1000) FSM1.transit(S_403);
+  if (FSM1.getTime() > 1000) FSM1.transit(S_404);
 }
 //------------------------------------
 /*the clamp move the the backward position (servo 2 turn)*/
-void S_403()
+void S_404()
 {
   if (FSM1.doTask())
   {
