@@ -10,16 +10,12 @@
   Input : IR sensor left (A4)
   Input : IR sensor middle (A3)
   Input : IR sensor right (A2)
-    /
-  /*
-    1. set the left and right offset (left motor is slower)
-    2. S_802&S_803
 */
 #include "ENGG1100.h"
 #include <Servo.h>
 #define BLK 0
 #define WHT 1
-#define RIGHT_POS 172
+#define RIGHT_POS 150
 #define REAR_POS 70
 #define LEFT_POS 0
 #define CLAMP_OPEN 180
@@ -41,6 +37,7 @@ SensorClass S3(A3);
 SensorClass S4(A2);
 MotorClass MotorR(D3, D2);
 MotorClass MotorL(D5, D4);
+int count = 0;
 //===== Basically, no need to modify setup() and loop() ====
 void setup()
 {
@@ -63,6 +60,17 @@ void S_999()
     Servo1.setValue(CLAMP_OPEN);
     Servo2.setValue(LEFT_POS);
     LEDDisplay.setValue(999);
+  }
+  FSM1.transit(S_101);
+}
+//----------start of state S_1999 -----
+void S_1999()
+{
+  if (FSM1.doTask())
+  {
+    Servo1.setValue(CLAMP_OPEN);
+    Servo2.setValue(RIGHT_POS);
+    LEDDisplay.setValue(1999);
   }
   FSM1.transit(S_101);
 }
@@ -195,7 +203,6 @@ void S_401()
   if (S1.getHiLow() == BLK)  FSM1.transit(S_403);
 }
 //------------------------------------
-/*Stop and if the car move pass the cup, move backward*/
 void S_402()
 {
   if (FSM1.doTask())
@@ -216,6 +223,7 @@ void S_403()
     MotorR.setSpeed(0);
     MotorL.setSpeed(0);
     Servo1.setValue(CLAMP_CLOSE);
+    count++;
   }
   if (FSM1.getTime() > 500) FSM1.transit(S_404);
 }
@@ -413,5 +421,10 @@ void S_803()
     MotorR.setSpeed(0);
     MotorL.setSpeed(0);
   }
-  FSM1.transit(S_999);
+  if (count >= 8) {
+    FSM1.transit(S_1999);
+  }
+  else {
+    FSM1.transit(S_999);
+  }
 }
