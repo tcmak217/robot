@@ -600,7 +600,7 @@ void S_2501()
   if (FSM1.doTask())
   {
     LEDDisplay.setValue(2501);
-    MotorR.setSpeed(-(NORMAL_SPEED - RIGHT_OFFSET - 30));
+    MotorR.setSpeed(-(NORMAL_SPEED - RIGHT_OFFSET - 20));
     MotorL.setSpeed(-(NORMAL_SPEED - LEFT_OFFSET - 100));
   }
 
