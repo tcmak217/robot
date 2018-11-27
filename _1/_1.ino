@@ -25,7 +25,7 @@
 #define CATCHED_SPEED 230
 #define TURN_SPEED 180
 #define LEFT_OFFSET -110
-#define RIGHT_OFFSET 0
+#define RIGHT_OFFSET 20
 
 FSMClass FSM1;          //The given FSM is named 'FSM1'.
 TM1637DisplayClass LEDDisplay(D10, D11); //7-segment LED Display is connected to D10,D11 for debug
@@ -43,7 +43,7 @@ void setup()
 {
   Serial.begin(115200);          //optional, for debug
   LEDDisplay.setBrightness(15); //optional
-  FSM1.init(S_2999);           // must have this line, you can change the first state of the FSM
+  FSM1.init(S_999);           // must have this line, you can change the first state of the FSM
   Servo1.init();
   Servo2.init();
 }
@@ -74,6 +74,7 @@ void S_1999()
   }
   FSM1.transit(S_101);
 }
+<<<<<<< HEAD
 //----------start of state S_2999 -----
 void S_2999()
 {
@@ -113,6 +114,8 @@ void S_4999()
   }
   FSM1.transit(S_4101);
 }
+=======
+>>>>>>> parent of 05169cf... Merge branch 'straight_line'
 //------------------------------------
 void S_101()
 {
@@ -335,8 +338,8 @@ void S_505()
   if (FSM1.doTask())
   {
     LEDDisplay.setValue(505);
-    MotorR.setSpeed((NORMAL_SPEED - RIGHT_OFFSET) / 2);
-    MotorL.setSpeed((NORMAL_SPEED - LEFT_OFFSET) / 2);
+    MotorR.setSpeed((NORMAL_SPEED - RIGHT_OFFSET)/2);
+    MotorL.setSpeed((NORMAL_SPEED - LEFT_OFFSET)/2);
   }
   if (FSM1.getTime() > 200) {
     if (S2.getHiLow() == BLK && S3.getHiLow() == BLK && S4.getHiLow() == BLK) {
@@ -346,6 +349,8 @@ void S_505()
       FSM1.transit(S_501);
     }
   }
+
+
 }
 //------------------------------------
 /*when s2 and s4 detect black, move a bit forward*/
@@ -450,6 +455,7 @@ void S_802()
   if (S2.getHiLow() == WHT && S3.getHiLow() == BLK && S4.getHiLow() == WHT) FSM1.transit(S_803);
 }
 //------------------------------------
+<<<<<<< HEAD
 void S_2101()
 {
   if (FSM1.doTask())
@@ -1180,6 +1186,8 @@ void S_4702()
   }
   if (S3.getHiLow() == BLK && S4.getHiLow() == WHT) FSM1.transit(S_701);
 }
+=======
+>>>>>>> parent of 05169cf... Merge branch 'straight_line'
 /*stop*/
 void S_803()
 {
@@ -1188,6 +1196,7 @@ void S_803()
     MotorR.setSpeed(0);
     MotorL.setSpeed(0);
   }
+<<<<<<< HEAD
   if (count < 4) {
     FSM1.transit(S_2999);
   }
@@ -1199,8 +1208,12 @@ void S_803()
   }
   else if (count >= 6 && count < 12) {
     FSM1.transit(S_999);
+=======
+  if (count >= 8) {
+    FSM1.transit(S_1999);
+>>>>>>> parent of 05169cf... Merge branch 'straight_line'
   }
   else {
-    FSM1.transit(S_1999);
+    FSM1.transit(S_999);
   }
 }
