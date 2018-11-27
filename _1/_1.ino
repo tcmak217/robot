@@ -28,8 +28,8 @@
 #define NORMAL_SPEED 250
 #define CATCHED_SPEED 230
 #define TURN_SPEED 180
-#define LEFT_OFFSET -110
-#define RIGHT_OFFSET 20
+#define LEFT_OFFSET 0
+#define RIGHT_OFFSET 0
 
 FSMClass FSM1;          //The given FSM is named 'FSM1'.
 TM1637DisplayClass LEDDisplay(D10, D11); //7-segment LED Display is connected to D10,D11 for debug

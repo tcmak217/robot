@@ -62,4 +62,3 @@ FSMSample.transit(FSMSampleState1)
 }
 */
 #endif
-

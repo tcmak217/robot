@@ -34,4 +34,3 @@ bool CDTimerClass::isDue()
 {
 	return isDue(0);
 }
-

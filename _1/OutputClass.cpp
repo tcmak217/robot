@@ -60,4 +60,3 @@ bool OutputClass::setValue(int i)
   }
   return false;
 }
-

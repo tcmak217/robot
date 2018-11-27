@@ -36,4 +36,3 @@ class CDTimerClass
 extern CDTimerClass CDTimer;
 
 #endif
-

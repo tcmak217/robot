@@ -248,4 +248,3 @@ uint8_t TM1637DisplayClass::encodeDigit(uint8_t digit)
 }
 
    
-

@@ -22,4 +22,3 @@ void ServoClass::setValue(int value)
     
   m_Servo.write(value);
 }
-
