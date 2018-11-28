@@ -25,7 +25,7 @@
 #define CATCHED_SPEED 230
 #define TURN_SPEED 180
 #define LEFT_OFFSET -110
-#define RIGHT_OFFSET 0
+#define RIGHT_OFFSET 20
 
 FSMClass FSM1;          //The given FSM is named 'FSM1'.
 TM1637DisplayClass LEDDisplay(D10, D11); //7-segment LED Display is connected to D10,D11 for debug
@@ -101,6 +101,17 @@ void S_3999()
     LEDDisplay.setValue(3999);
   }
   FSM1.transit(S_3101);
+}
+//----------start of state S_4999 -----
+void S_4999()
+{
+  if (FSM1.doTask())
+  {
+    Servo1.setValue(CLAMP_OPEN);
+    Servo2.setValue(RIGHT_POS);
+    LEDDisplay.setValue(4999);
+  }
+  FSM1.transit(S_4101);
 }
 //------------------------------------
 void S_101()
@@ -499,25 +510,15 @@ void S_2301()
 {
   if (FSM1.doTask())
   {
+    MotorR.setSpeed(NORMAL_SPEED - RIGHT_OFFSET);
+    MotorL.setSpeed(NORMAL_SPEED - LEFT_OFFSET);
     LEDDisplay.setValue(2301);
   }
   if (S1.getHiLow() == BLK)  FSM1.transit(S_2401);
-  if (S2.getHiLow() == WHT && S4.getHiLow() == WHT) FSM1.transit(S_2302);
   if (S2.getHiLow() == WHT && S4.getHiLow() == BLK) FSM1.transit(S_2303);
   if (S2.getHiLow() == BLK && S4.getHiLow() == WHT) FSM1.transit(S_2304);
 }
-//------------------------------------
-void S_2302()
-{
-  if (FSM1.doTask())
-  {
-    LEDDisplay.setValue(2302);
-    MotorR.setSpeed(NORMAL_SPEED - RIGHT_OFFSET);
-    MotorL.setSpeed(NORMAL_SPEED - LEFT_OFFSET);
-  }
-  if (S1.getHiLow() == BLK)  FSM1.transit(S_2401);
-  if (!(S2.getHiLow() == WHT && S4.getHiLow() == WHT)) FSM1.transit(S_2301);
-}
+
 //------------------------------------
 void S_2303()
 {
@@ -901,7 +902,274 @@ void S_3702()
   if (S3.getHiLow() == BLK && S2.getHiLow() == WHT) FSM1.transit(S_701);
 }
 //----------------------------------
-
+void S_4101()
+{
+  if (FSM1.doTask())
+  {
+    MotorR.setSpeed(NORMAL_SPEED - RIGHT_OFFSET);
+    MotorL.setSpeed(NORMAL_SPEED - LEFT_OFFSET);
+    LEDDisplay.setValue(4101);
+  }
+  if (S2.getHiLow() == WHT && S4.getHiLow() == BLK) FSM1.transit(S_4103);
+  if (S2.getHiLow() == BLK && S4.getHiLow() == WHT) FSM1.transit(S_4104);
+  if (S2.getHiLow() == BLK && S3.getHiLow() == BLK && S4.getHiLow() == BLK) FSM1.transit(S_4201);
+}
+//------------------------------------
+void S_4103()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4103);
+    MotorR.setSpeed(0);
+    MotorL.setSpeed(TURN_SPEED);
+  }
+  if (!(S2.getHiLow() == WHT && S4.getHiLow() == BLK)) FSM1.transit(S_4101);
+}
+//------------------------------------
+void S_4104()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4104);
+    MotorR.setSpeed(TURN_SPEED);
+    MotorL.setSpeed(0);
+  }
+  if (!(S2.getHiLow() == BLK && S4.getHiLow() == WHT)) FSM1.transit(S_4101);
+}
+//------------------------------------
+void S_4201()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4201);
+    MotorR.setSpeed(NORMAL_SPEED - RIGHT_OFFSET);
+    MotorL.setSpeed(NORMAL_SPEED - LEFT_OFFSET);
+  }
+  if (FSM1.getTime() > 100) FSM1.transit(S_4202);
+}
+//------------------------------------
+void S_4202()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4202);
+    MotorR.setSpeed(0);
+    MotorL.setSpeed(TURN_SPEED);
+  }
+  if (S3.getHiLow() == BLK && S4.getHiLow() == WHT) FSM1.transit(S_4301);
+}
+//------------------------------------
+void S_4301()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4301);
+  }
+  if (S1.getHiLow() == BLK)  FSM1.transit(S_4401);
+  if (S2.getHiLow() == WHT && S4.getHiLow() == WHT) FSM1.transit(S_4302);
+  if (S2.getHiLow() == WHT && S4.getHiLow() == BLK) FSM1.transit(S_4303);
+  if (S2.getHiLow() == BLK && S4.getHiLow() == WHT) FSM1.transit(S_4304);
+}
+//------------------------------------
+void S_4302()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4302);
+    MotorR.setSpeed(NORMAL_SPEED - RIGHT_OFFSET);
+    MotorL.setSpeed(NORMAL_SPEED - LEFT_OFFSET);
+  }
+  if (S1.getHiLow() == BLK)  FSM1.transit(S_4401);
+  if (!(S2.getHiLow() == WHT && S4.getHiLow() == WHT)) FSM1.transit(S_4301);
+}
+//------------------------------------
+void S_4303()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4303);
+    MotorR.setSpeed(0);
+    MotorL.setSpeed(TURN_SPEED);
+  }
+  if (S1.getHiLow() == BLK) FSM1.transit(S_4401);
+  if (!(S2.getHiLow() == WHT && S4.getHiLow() == BLK)) FSM1.transit(S_4301);
+}
+//------------------------------------
+void S_4304()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4304);
+    MotorR.setSpeed(TURN_SPEED);
+    MotorL.setSpeed(0);
+  }
+  if (S1.getHiLow() == BLK)  FSM1.transit(S_4401);
+  if (!(S2.getHiLow() == BLK && S4.getHiLow() == WHT)) FSM1.transit(S_4301);
+}
+//------------------------------------
+/*Stop and if the car move pass the cup, move backward*/
+void S_4401()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4401);
+    MotorR.setSpeed(0);
+    MotorL.setSpeed(0);
+  }
+  if (S1.getHiLow() == WHT)  FSM1.transit(S_4402);
+  if (S1.getHiLow() == BLK)  FSM1.transit(S_4403);
+}
+//------------------------------------
+void S_4402()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4402);
+    MotorR.setSpeed(NORMAL_SPEED - RIGHT_OFFSET - 100);
+    MotorL.setSpeed(NORMAL_SPEED - LEFT_OFFSET - 100);
+  }
+  if (S1.getHiLow() == BLK)  FSM1.transit(S_4401);
+}
+//------------------------------------
+/*catch the cup*/
+void S_4403()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4403);
+    MotorR.setSpeed(0);
+    MotorL.setSpeed(0);
+    Servo1.setValue(CLAMP_CLOSE);
+    count++;
+  }
+  if (FSM1.getTime() > 500) FSM1.transit(S_4404);
+}
+//------------------------------------
+/*the clamp move the the backward position (servo 2 turn)*/
+void S_4404()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4404);
+    MotorR.setSpeed(0);
+    MotorL.setSpeed(0);
+    Servo2.setValue(REAR_POS);
+  }
+  if (FSM1.getTime() > 500) FSM1.transit(S_4501);
+}
+//------------------------------------
+void S_4501()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4501);
+    MotorR.setSpeed(-(NORMAL_SPEED - RIGHT_OFFSET - 30));
+    MotorL.setSpeed(-(NORMAL_SPEED - LEFT_OFFSET - 100));
+  }
+  if (FSM1.getTime() > 680) FSM1.transit(S_4502);
+}
+//------------------------------------
+void S_4502()
+{
+  if (FSM1.doTask()) {
+    LEDDisplay.setValue(4502);
+    MotorL.setSpeed(-250);
+    MotorR.setSpeed(180);
+  }
+  if (S2.getHiLow() == WHT && S3.getHiLow() == BLK && S4.getHiLow() == WHT && FSM1.getTime() > 1000) FSM1.transit(S_4601);
+}
+//---------------------------------------
+/*Same as S_301 (with cup)*/
+void S_4601()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4601);
+  }
+  if (S2.getHiLow() == WHT && S4.getHiLow() == WHT) FSM1.transit(S_4602);
+  if (S2.getHiLow() == WHT && S4.getHiLow() == BLK) FSM1.transit(S_4603);
+  if (S2.getHiLow() == BLK && S4.getHiLow() == WHT) FSM1.transit(S_4604);
+  if (S2.getHiLow() == BLK && S3.getHiLow() == BLK && S4.getHiLow() == BLK) FSM1.transit(S_4605);
+}
+//------------------------------------
+/*Same as S_302 (with cup)*/
+void S_4602()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4602);
+    MotorR.setSpeed(NORMAL_SPEED - RIGHT_OFFSET);
+    MotorL.setSpeed(NORMAL_SPEED - LEFT_OFFSET);
+  }
+  if (!(S2.getHiLow() == WHT && S4.getHiLow() == WHT)) FSM1.transit(S_4601);
+}
+//------------------------------------
+/*Same as S_303 (with cup)*/
+void S_4603()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4603);
+    MotorR.setSpeed(0);
+    MotorL.setSpeed(TURN_SPEED);
+  }
+  if (!(S2.getHiLow() == WHT && S4.getHiLow() == BLK)) FSM1.transit(S_4601);
+}
+//------------------------------------
+/*Same as S_304 (with cup)*/
+void S_4604()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4604);
+    MotorR.setSpeed(TURN_SPEED);
+    MotorL.setSpeed(0);
+  }
+  if (!(S2.getHiLow() == BLK && S4.getHiLow() == WHT)) FSM1.transit(S_4601);
+}
+//------------------------------------
+/*Same as S_304 (with cup)*/
+void S_4605()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4605);
+    MotorR.setSpeed((NORMAL_SPEED - RIGHT_OFFSET) / 2);
+    MotorL.setSpeed((NORMAL_SPEED - LEFT_OFFSET) / 2);
+  }
+  if (FSM1.getTime() > 200) {
+    if (S2.getHiLow() == BLK && S3.getHiLow() == BLK && S4.getHiLow() == BLK) {
+      FSM1.transit(S_4701);
+    }
+    else {
+      FSM1.transit(S_4601);
+    }
+  }
+}
+//------------------------------------
+/*when s2 and s4 detect black, move a bit forward*/
+void S_4701()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4701);
+    MotorR.setSpeed(NORMAL_SPEED - RIGHT_OFFSET);
+    MotorL.setSpeed(NORMAL_SPEED - LEFT_OFFSET);
+  }
+  if (FSM1.getTime() > 200) FSM1.transit(S_4702);
+}
+//------------------------------------
+/*turn left after entering S_601*/
+void S_4702()
+{
+  if (FSM1.doTask())
+  {
+    LEDDisplay.setValue(4702);
+    MotorR.setSpeed(TURN_SPEED - RIGHT_OFFSET);
+    MotorL.setSpeed(0);
+  }
+  if (S3.getHiLow() == BLK && S4.getHiLow() == WHT) FSM1.transit(S_701);
+}
 /*stop*/
 void S_803()
 {
@@ -913,8 +1181,11 @@ void S_803()
   if (count < 4) {
     FSM1.transit(S_2999);
   }
-  else if (count == 4 || count == 5) {
+  else if (count == 4) {
     FSM1.transit(S_3999);
+  }
+  else if (count == 5) {
+    FSM1.transit(S_4999);
   }
   else if (count >= 6 && count < 12) {
     FSM1.transit(S_999);
