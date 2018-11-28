@@ -601,7 +601,7 @@ void S_2501()
   {
     LEDDisplay.setValue(2501);
     MotorR.setSpeed(-(NORMAL_SPEED - RIGHT_OFFSET - 30));
-    MotorL.setSpeed(-(NORMAL_SPEED - LEFT_OFFSET - 100));
+    MotorL.setSpeed(-(NORMAL_SPEED - LEFT_OFFSET - 90));
   }
 
   if (S2.getHiLow() == WHT && S3.getHiLow() == WHT && S4.getHiLow() == WHT ) FSM1.transit(S_2601);
